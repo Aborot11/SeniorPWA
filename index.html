@@ -3,14 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Staff Dashboard – Senior Welfare System</title>
+<title>Senior Help – PWA</title>
+
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Manifest for PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4a90e2">
+
 <style>
+  /* ===== Reset & Base ===== */
   body {
     font-family: 'Roboto', sans-serif;
     background-color: #f5f6fa;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent; /* removes tap highlight on mobile */
   }
 
   header {
@@ -31,8 +40,8 @@
 
   .container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column; /* stack cards for seniors */
+    align-items: center;
     padding: 20px;
     gap: 20px;
   }
@@ -42,7 +51,8 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     padding: 20px;
-    width: 300px;
+    width: 90%; /* mobile-friendly width */
+    max-width: 400px;
   }
 
   .card h2 {
@@ -61,15 +71,17 @@
 
   .btn {
     display: inline-block;
-    padding: 8px 15px;
+    padding: 12px 20px;
     margin: 5px 5px 0 0;
     background-color: #27ae60;
     color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1rem;
     transition: background-color 0.3s, transform 0.2s;
+    width: 100%; /* full width for seniors */
+    text-align: center;
   }
 
   .btn:hover {
@@ -77,75 +89,55 @@
     transform: translateY(-2px);
   }
 
-  @media (max-width: 1000px) {
-    .container {
-      flex-direction: column;
-      align-items: center;
-    }
-    .card {
-      width: 90%;
-    }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 </style>
 </head>
 <body>
 
 <header>
-  <img src="https://img.icons8.com/ios-filled/50/ffffff/monitor.png"/>
-  Staff Dashboard – Senior Welfare System
+  <img src="https://img.icons8.com/ios-filled/50/ffffff/monitor.png" alt="Dashboard Icon"/>
+  Senior Help – PWA
 </header>
 
 <div class="container">
-  <!-- Alerts / Emergency Requests -->
+  <!-- Emergency Alert -->
   <div class="card">
-    <h2>1. Alerts / Emergency Requests</h2>
-    <p>Agad makita kung may senior na nag-click ng "Need Help"</p>
-    <button class="btn">View Request</button>
-    <button class="btn">Assign Caregiver / Staff</button>
-    <button class="btn">Mark as Resolved</button>
+    <h2>Emergency / Need Help</h2>
+    <p>Click the button below to alert caregivers immediately.</p>
+    <button class="btn" onclick="alert('Caregiver alerted!')">Need Help</button>
   </div>
 
-  <!-- Senior Citizens List -->
+  <!-- Senior Info (Optional) -->
   <div class="card">
-    <h2>2. Senior Citizens List</h2>
-    <p>Makita ang listahan ng lahat ng seniors sa barangay</p>
-    <p><strong>Senior 1</strong></p>
-    <button class="btn">View Profile</button>
-    <button class="btn">Update Status</button>
-    <button class="btn">Schedule Visit</button>
-    <p><strong>Senior 2</strong></p>
-    <button class="btn">View Profile</button>
-    <button class="btn">Update Status</button>
-    <button class="btn">Schedule Visit</button>
+    <h2>Your Profile</h2>
+    <p>Name: Juan Dela Cruz</p>
+    <p>Age: 70</p>
+    <p>Status: Active</p>
+    <button class="btn" onclick="alert('Profile updated!')">Update Status</button>
   </div>
 
-  <!-- Visit Calendar / Schedule -->
+  <!-- Visit / Schedule Info -->
   <div class="card">
-    <h2>3. Visit Calendar / Schedule</h2>
-    <p>Plan at track ang welfare check-ups</p>
-    <button class="btn">Add Visit</button>
-    <button class="btn">Edit Visit</button>
-    <button class="btn">Mark Completed</button>
-    <button class="btn">Filter by Senior or Staff</button>
-  </div>
-
-  <!-- Reports / Analytics -->
-  <div class="card">
-    <h2>4. Reports / Analytics</h2>
-    <p>Overview ng overall senior welfare activities</p>
-    <button class="btn">Generate Report</button>
-    <button class="btn">View Charts</button>
-    <button class="btn">Export PDF / Excel</button>
-  </div>
-
-  <!-- Settings / User Management -->
-  <div class="card">
-    <h2>5. Settings / User Management</h2>
-    <p>Manage staff accounts at notifications</p>
-    <button class="btn">Add / Edit / Remove Staff</button>
-    <button class="btn">Notification Preferences</button>
+    <h2>Upcoming Visits</h2>
+    <p>No scheduled visits for today.</p>
+    <button class="btn" onclick="alert('Visit scheduled!')">Request Visit</button>
   </div>
 </div>
+
+<!-- Service Worker Registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('Service Worker registered: ', reg.scope))
+      .catch(err => console.log('Service Worker registration failed: ', err));
+    });
+  }
+</script>
 
 </body>
 </html>
